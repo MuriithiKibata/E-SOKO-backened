@@ -24,3 +24,10 @@ class Product(db.Model, SerializerMixin):
     price = db.Column(db.Integer, nullable=False)
     category = db.Column(db.Text, nullable=False)
     image = db.Column(db.Text, nullable=False)
+
+class Order(db.Model, SerializerMixin):
+    __tablename__= 'orders'
+    id = db.Column(db.Integer, primary_key=True)
+    amount = db.Column(db.Integer, nullable=False)
+    status = db.Column(db.Text, nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
