@@ -38,3 +38,9 @@ class OrderItem(db.Model, SerializerMixin):
     quantity = db.Column(db.Integer, nullable=False)
     order_id = db.Column(db.Integer, db.ForeignKey('orders.id'))
     product_id = db.Column(db.Integer, db.ForeignKey('products.id'))
+
+class Cart(db.Model, SerializerMixin):
+    __tablename__= 'carts'
+    id = db.Column(db.Integer, primary_key=True)
+    product_id = db.Column(db.Integer, db.ForeignKey('products.id'))
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
