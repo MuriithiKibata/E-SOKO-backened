@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 from fastapi import FastAPI, File, UploadFile
 from fastapi.responses import FileResponse
 from pathlib import Path
@@ -39,3 +40,17 @@ def users(data: UsersModel):
     
 
 
+=======
+from flask import Flask
+from flask_migrate import Migrate
+from models import db, User
+
+
+app = Flask(__name__)
+
+migrate = Migrate(app, db)
+
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///user.db'
+app.config['SQLALCHEMY_ECHO'] = True
+db.init_app(app)
+>>>>>>> d0d49fb5e2e78ce8b0db4d34414d8be9e961a14d
