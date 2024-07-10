@@ -16,6 +16,11 @@ class User(db.Model, SerializerMixin):
     address = db.Column(db.String, nullable=False)
     created_at = db.Column(db.TIMESTAMP)
 
+    orders = db.relationship('Order', back_populates='user')
+    products = db.relationship('Product', back_populates='user')
+
+    serialize_rules = ('-products.user', '-orders.user')
+
 class Product(db.Model, SerializerMixin):
     __tablename__= 'products'
     id = db.Column(db.Integer, primary_key=True)
@@ -24,6 +29,12 @@ class Product(db.Model, SerializerMixin):
     price = db.Column(db.Integer, nullable=False)
     category = db.Column(db.Text, nullable=False)
     image = db.Column(db.Text, nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
+
+    user = db.relationship('User', back_populates='products')
+    cart = db.relationship('Cart', back_populates='products')
+
+    serialize_rules = ('-user.products',)
 
 class Order(db.Model, SerializerMixin):
     __tablename__= 'orders'
@@ -32,6 +43,11 @@ class Order(db.Model, SerializerMixin):
     status = db.Column(db.Text, nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
 
+    user = db.relationship('User', back_populates='orders')
+    orderitems = db.relationship('OrderItem', back_populates='order')
+
+    serialize_rules = ('-user.orders')
+
 class OrderItem(db.Model, SerializerMixin):
     __tablename__= "orderitems"
     id = db.Column(db.Integer, primary_key=True)
@@ -39,8 +55,14 @@ class OrderItem(db.Model, SerializerMixin):
     order_id = db.Column(db.Integer, db.ForeignKey('orders.id'))
     product_id = db.Column(db.Integer, db.ForeignKey('products.id'))
 
+    order = db.relationship('Order', back_populates='oderitems')
+
+    serialize_rules = ('')
+
 class Cart(db.Model, SerializerMixin):
     __tablename__= 'carts'
     id = db.Column(db.Integer, primary_key=True)
     product_id = db.Column(db.Integer, db.ForeignKey('products.id'))
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+
+    products = db.relationship('Product', back_populates='cart')
