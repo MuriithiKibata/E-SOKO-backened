@@ -55,7 +55,7 @@ class OrderItem(db.Model, SerializerMixin):
     order_id = db.Column(db.Integer, db.ForeignKey('orders.id'))
     product_id = db.Column(db.Integer, db.ForeignKey('products.id'))
 
-    order = db.relationship('Order', back_populates='oderitems')
+    order = db.relationship('Order', backref='oderitems')
 
     serialize_rules = ('-order.orderitems',)
 
