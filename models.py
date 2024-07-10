@@ -16,4 +16,11 @@ class User(db.Model, SerializerMixin):
     address = db.Column(db.String, nullable=False)
     created_at = db.Column(db.TIMESTAMP)
 
-    
+class Product(db.Model, SerializerMixin):
+    __tablename__= 'products'
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.Text, nullable=False)
+    description = db.Column(db.Text, nullable=False)
+    price = db.Column(db.Integer, nullable=False)
+    category = db.Column(db.Text, nullable=False)
+    image = db.Column(db.Text, nullable=False)
