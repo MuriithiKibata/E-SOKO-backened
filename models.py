@@ -19,7 +19,7 @@ class User(db.Model, SerializerMixin):
     orders = db.relationship('Order', back_populates='user')
     products = db.relationship('Product', back_populates='user')
 
-    serialize_rules = ('-products.user', '-orders.user')
+    serialize_rules = ('-products.user', '-orders.user',)
 
 class Product(db.Model, SerializerMixin):
     __tablename__= 'products'
@@ -34,7 +34,7 @@ class Product(db.Model, SerializerMixin):
     user = db.relationship('User', back_populates='products')
     cart = db.relationship('Cart', back_populates='products')
 
-    serialize_rules = ('-user.products',)
+    serialize_rules = ('-user.products', 'cart.products',)
 
 class Order(db.Model, SerializerMixin):
     __tablename__= 'orders'
@@ -46,7 +46,7 @@ class Order(db.Model, SerializerMixin):
     user = db.relationship('User', back_populates='orders')
     orderitems = db.relationship('OrderItem', back_populates='order')
 
-    serialize_rules = ('-user.orders')
+    serialize_rules = ('-user.orders',)
 
 class OrderItem(db.Model, SerializerMixin):
     __tablename__= "orderitems"
@@ -57,7 +57,7 @@ class OrderItem(db.Model, SerializerMixin):
 
     order = db.relationship('Order', back_populates='oderitems')
 
-    serialize_rules = ('')
+    serialize_rules = ('-order.orderitems',)
 
 class Cart(db.Model, SerializerMixin):
     __tablename__= 'carts'
@@ -66,3 +66,5 @@ class Cart(db.Model, SerializerMixin):
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
 
     products = db.relationship('Product', back_populates='cart')
+
+    serialize_rules = ('-products.cart',)
