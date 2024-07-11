@@ -45,26 +45,28 @@ class Order(db.Model, SerializerMixin):
     
 
     user = db.relationship('User', back_populates='orders')
-    orderitems = db.relationship('OrderItem', back_populates='order')
+    #  orderitems = db.relationship('OrderItem', back_populates='order')
 
     serialize_rules = ('-user.orders',)
 
-class OrderItem(db.Model, SerializerMixin):
-    __tablename__= "orderitems"
-    id = db.Column(db.Integer, primary_key=True)
-    quantity = db.Column(db.Integer, nullable=False)
-    order_id = db.Column(db.Integer, db.ForeignKey('orders.id'))
-    product_id = db.Column(db.Integer, db.ForeignKey('products.id'))
+# class OrderItem(db.Model, SerializerMixin):
+#     __tablename__= "orderitems"
+#     id = db.Column(db.Integer, primary_key=True)
+#     quantity = db.Column(db.Integer, nullable=False)
+#     order_id = db.Column(db.Integer, db.ForeignKey('orders.id'))
+#     product_id = db.Column(db.Integer, db.ForeignKey('products.id'))
 
-    order = db.relationship('Order', backref='oderitems')
+#     order = db.relationship('Order', backref='oderitems')
 
-    serialize_rules = ('-order.orderitems',)
+#     serialize_rules = ('-order.orderitems',)
 
 class Cart(db.Model, SerializerMixin):
     __tablename__= 'carts'
     id = db.Column(db.Integer, primary_key=True)
     product_id = db.Column(db.Integer, db.ForeignKey('products.id'))
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    quantity = db.Column(db.Integer, nullable=False)
+    order_id = db.Column(db.Integer, db.ForeignKey('orders.id'))
 
     products = db.relationship('Product', back_populates='cart')
 
