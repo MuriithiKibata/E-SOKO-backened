@@ -1,4 +1,3 @@
-from flask_migrate import migrate
 from flask_restful import Resource, reqparse
 from models import db, Product
 
@@ -9,11 +8,13 @@ class ProductResource(Resource):
                         help="Product name is required")
     parser.add_argument('description', required=True,
                         help="Description is required")
-    parser.add_argument('image', required=True,
-                        help="Image is required")
     parser.add_argument('price', type=int, required=True, help="Price is required")
     parser.add_argument('category', required=True,
                         help="Category is required")
+    parser.add_argument('image', required=True,
+                        help="Image is required")
+ 
+    
 
     
     def get(self, id=None):
