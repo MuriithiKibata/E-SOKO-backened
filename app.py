@@ -8,6 +8,7 @@ from flask_jwt_extended import JWTManager
 from models import db, User
 from flask_restful import Resource, Api
 from resources.product import ProductResource
+from resources.user import SignupResource, LoginResource
 
 
 app = Flask(__name__)
@@ -35,3 +36,5 @@ jwt = JWTManager(app)
 db.init_app(app)
 
 api.add_resource(ProductResource, '/products', '/products/<int:id>')
+api.add_resource(SignupResource, '/signup')
+api.add_resource(LoginResource, '/login')
