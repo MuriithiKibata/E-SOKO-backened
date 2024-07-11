@@ -1,6 +1,3 @@
-import os
-from datetime import timedelta
-
 from flask import Flask
 from flask_migrate import Migrate
 from flask_restful import Resource, Api
@@ -9,11 +6,12 @@ from flask_bcrypt import Bcrypt
 from flask_jwt_extended import JWTManager
 
 from models import db, User
+from flask_restful import Resource, Api
+from resources.product import ProductResource
 
 
 app = Flask(__name__)
 api = Api(app)
-
 
 migrate = Migrate(app, db)
 
@@ -36,3 +34,4 @@ jwt = JWTManager(app)
 
 db.init_app(app)
 
+api.add_resource(ProductResource, '/products', '/products/<int:id>')
