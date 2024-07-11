@@ -5,7 +5,7 @@ from models import db, User
 
 
 class SignupResource(Resource):
-    parser = reqparse.RequesrParser()
+    parser = reqparse.RequestParser()
     parser.add_argument('name', required=True, help='Name is required')
     parser.add_argument('email', required=True, help='Email address is required')
     parser.add_argument('password', required=True, help='Password address is required')
