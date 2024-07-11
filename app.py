@@ -1,3 +1,5 @@
+import os
+from datetime import timedelta
 from flask import Flask
 from flask_migrate import Migrate
 from flask_restful import Resource, Api
@@ -8,6 +10,7 @@ from flask_jwt_extended import JWTManager
 from models import db, User
 from flask_restful import Resource, Api
 from resources.product import ProductResource
+from resources.user import SignupResource, LoginResource
 
 
 app = Flask(__name__)
@@ -35,3 +38,7 @@ jwt = JWTManager(app)
 db.init_app(app)
 
 api.add_resource(ProductResource, '/products', '/products/<int:id>')
+api.add_resource(SignupResource, 'users', '/signup')
+api.add_resource(LoginResource, 'users', '/login')
+
+# api.add_resource()
