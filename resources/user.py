@@ -54,6 +54,10 @@ class LoginResource(Resource):
                 additional_claims = { "role": user_dict['role'] }
                 access_token = create_access_token(identity=user_dict['id'],
                                                    additional_claims=additional_claims)
+                
+                db.session.add(user)
+
+                db.session.commit()
 
                 return {"message": "Login successful",
                         "status": "success",
