@@ -9,15 +9,16 @@ class SignupResource(Resource):
     parser.add_argument('name', required=True, help='Name is required')
     parser.add_argument('email', required=True, help='Email address is required')
     parser.add_argument('password', required=True, help='Password address is required')
+    parser.add_argument('address', required=True, help='address is required')
     
     def post(self):
         data = self.parser.parse_args()
         
         data['password'] = generate_password_hash(
             data['password']
-        ).decode('uft-8')
+        )
         
-        data['role'] = 'member'
+        # data['role'] = 'member'
         
         email = User.query.filter_by(email=data['email']).first()
         

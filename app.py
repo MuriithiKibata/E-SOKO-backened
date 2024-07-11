@@ -43,7 +43,7 @@ db.init_app(app)
 api.add_resource(ProductResource, '/products', '/products/<int:id>')
 
 api.add_resource(OrderResource, '/orders', '/orders/<int:id>')
-api.add_resource(SignupResource, 'users', '/signup')
-api.add_resource(LoginResource, 'users', '/login')
+api.add_resource(SignupResource, '/users', '/signup')
+api.add_resource(LoginResource, '/users', '/login')
 
 # api.add_resource()
