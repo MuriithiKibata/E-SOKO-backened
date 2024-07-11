@@ -11,6 +11,8 @@ class SignupResource(Resource):
     parser.add_argument('password', required=True, help='Password address is required')
     parser.add_argument('address', required=True, help='address is required')
     
+    
+    
     def post(self):
         data = self.parser.parse_args()
         
@@ -18,7 +20,7 @@ class SignupResource(Resource):
             data['password']
         )
         
-        # data['role'] = 'member'
+        data['role'] = 'member'
         
         email = User.query.filter_by(email=data['email']).first()
         
