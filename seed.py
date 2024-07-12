@@ -1,7 +1,32 @@
 from models import db, User, Product, Order, Cart
 from app import app
+from datetime import datetime
 
 with app.app_context():
+
+    print('Start seeding...')
+
+    print("Deleting data...")
+    User.query.delete()
+    Product.query.delete()
+    Order.query.delete()
+    Cart.query.delete()
+
+    print("Creating users...")
+
+    Ava = User(id="1", name="Ava", email="ava@gmail.com", password="8463456", address="address1", created_at=datetime.now())
+    Tom = User(id="2", name="Tom", email="tom@gmail.com", password="8768963", address="address2", created_at=datetime.now())
+    Olly = User(id="3", name="Olly", email="olly@gmail.com", password="9606590", address="address3", created_at=datetime.now())
+    May = User(id="4", name="May", email="may@gmail.com", password="8763874", address="address4", created_at=datetime.now())
+    Amelia = User(id="5", name="Amelia", email="amelia@gmail.com", password="4674387", address="address5", created_at=datetime.now())
+    Mia = User(id="6", name="Mia", email="mia@gmail.com", password="6386658", address="address6", created_at=datetime.now())
+    John = User(id="7", name="John", email="john@gmail.com", password="6986366", address="address7", created_at=datetime.now())
+    Dan = User(id="8", name="Dan", email="dan@gmail.com", password="8943009", address="address8", created_at=datetime.now())
+    users = [Ava,Tom,Olly,May,Amelia,Mia,John,Dan]
+
+    db.session.add_all(users)
+    db.session.commit()
+
 
     print("Creating products...")
     watch = Product(name="oraimo watch 3 Pro, 1.83", description="BT call Smart Watch", price="5,999", image="https://ke.jumia.is/unsafe/fit-in/500x500/filters:fill(white)/product/04/1598351/1.jpg?5040", category="watch")
@@ -24,4 +49,31 @@ with app.app_context():
     db.session.add_all(products)
     db.session.commit()
 
+    print("Creating orders...")
+
+    ord1 = Order(id="1", amount="4,100", status="Pending order")
+    ord2 = Order(id="2", amount="1,900", status="Pending approval")
+    ord3 = Order(id="3", amount="5,000", status="In Transit")
+    ord4 = Order(id="4", amount="55,499", status="Shipping")
+    ord5 = Order(id="5", amount="5,200", status="Pending payment")
+    ord6 = Order(id="6", amount="4,100", status="Waiting to be shipped")
+    ord7 = Order(id="7", amount="2,100", status="Shipped to branch")
+    ord8 = Order(id="8", amount="5,999", status="Delivered")
+    ord9 = Order(id="9", amount="2,600", status="Shipping")
+    ord10 = Order(id="10", amount="4,500", status="Cancelled") 
+    ord11 = Order(id="11", amount="4,100", status="Returned")   
+    orders = [ord1,ord2,ord3,ord4,ord5,ord6,ord7,ord8,ord9,ord10,ord11]
+
+    db.session.add_all(orders)
+    db.session.commit()
+
+    #print("Cart seeding...")
+    #carts = []
+    #db.session.add(carts)
+    #db.session.commit()
+
+    print('Users seeded')
+    print('Products seeded')
+    print('Orders seeded')
+    print('Cart seeded')
     print("Seeding done!")
