@@ -20,6 +20,7 @@ class User(db.Model, SerializerMixin):
     products = db.relationship('Product', back_populates='users')
 
     serialize_rules = ('-products.user', '-orders.user',)
+    serialize_only = ('id', 'name', 'email', 'password', 'address')
 
 class Product(db.Model, SerializerMixin):
     __tablename__= 'products'
@@ -35,6 +36,7 @@ class Product(db.Model, SerializerMixin):
     cart = db.relationship('Cart', back_populates='products')
 
     serialize_rules = ('-user.products', 'cart.products',)
+    serialize_only = ('id', 'name', 'description', 'price', 'category', 'image')
 
 class Order(db.Model, SerializerMixin):
     __tablename__= 'orders'
@@ -48,6 +50,8 @@ class Order(db.Model, SerializerMixin):
     #  orderitems = db.relationship('OrderItem', back_populates='order')
 
     serialize_rules = ('-user.orders',)
+    serialize_only = ('id', 'amount', 'status')
+
 
 # class OrderItem(db.Model, SerializerMixin):
 #     __tablename__= "orderitems"
