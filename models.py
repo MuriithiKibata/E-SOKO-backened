@@ -36,7 +36,7 @@ class Product(db.Model, SerializerMixin):
     cart = db.relationship('Cart', back_populates='products')
 
     serialize_rules = ('-user.products', 'cart.products',)
-    serialize_only = ('id', 'name', 'description', 'price', 'image')
+    serialize_only = ('id', 'name', 'description', 'price', 'category', 'image')
 
 class Order(db.Model, SerializerMixin):
     __tablename__= 'orders'
@@ -51,6 +51,7 @@ class Order(db.Model, SerializerMixin):
 
     serialize_rules = ('-user.orders',)
     serialize_only = ('id', 'amount', 'status')
+
 
 # class OrderItem(db.Model, SerializerMixin):
 #     __tablename__= "orderitems"
