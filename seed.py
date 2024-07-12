@@ -67,7 +67,7 @@ with app.app_context():
     db.session.add_all(orders)
     db.session.commit()
 
-    print("Cart seeding...")
+    #print("Cart seeding...")
     #carts = []
     #db.session.add(carts)
     #db.session.commit()
