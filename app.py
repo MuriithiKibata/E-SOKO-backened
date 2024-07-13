@@ -34,7 +34,7 @@ migrate = Migrate(app, db, render_as_batch=True)
 
 bcrypt = Bcrypt(app)
 
-jwt = JWTManager(app)
+jwt = JWTManager(app
 
 
 
