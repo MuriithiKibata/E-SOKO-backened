@@ -16,7 +16,7 @@ class User(db.Model, SerializerMixin):
     address = db.Column(db.String, nullable=False)
     created_at = db.Column(db.TIMESTAMP)
 
-    orders = db.relationship('Order', back_populates='users')
+    orders = db.relationship('Order', back_populates='user')
     products = db.relationship('Product', back_populates='users')
 
     serialize_rules = ('-products.user', '-orders.user',)
@@ -72,6 +72,6 @@ class Cart(db.Model, SerializerMixin):
     quantity = db.Column(db.Integer, nullable=False)
     order_id = db.Column(db.Integer, db.ForeignKey('orders.id'))
 
-    products = db.relationship('Product', back_populates='carts')
+    products = db.relationship('Product', back_populates='cart')
 
     serialize_rules = ('-products.cart',)
