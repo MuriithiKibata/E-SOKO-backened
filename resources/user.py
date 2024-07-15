@@ -2,6 +2,7 @@ from flask_restful import Resource, reqparse
 from flask_bcrypt import generate_password_hash
 from flask_jwt_extended import create_access_token
 from models import db, User
+from werkzeug.security import check_password_hash
 
 
 class SignupResource(Resource):
@@ -39,8 +40,7 @@ class SignupResource(Resource):
         
 class LoginResource(Resource):
     parser = reqparse.RequestParser()
-    parser.add_argument('email', required=True,
-                        help="Email address is required")
+    parser.add_argument('email', required=True, help="Email address is required")
     parser.add_argument('password', required=True, help="Password is required")
     
     def post(self):
@@ -48,26 +48,16 @@ class LoginResource(Resource):
 
         user = User.query.filter_by(email=data['email']).first()
 
-        if user:
-            
-            is_password_match = user.check_password(data['password'])
+        if user and check_password_hash(user.password, data['password']):
+            user_dict = user.to_dict()
+            additional_claims = {"role": user_dict['role']}
+            access_token = create_access_token(identity=user_dict['id'], additional_claims=additional_claims)
 
-            if is_password_match:
-                user_dict = user.to_dict()
-                additional_claims = { "role": user_dict['role'] }
-                access_token = create_access_token(identity=user_dict['id'],
-                                                   additional_claims=additional_claims)
-                
-                db.session.add(user)
-
-                db.session.commit()
-
-                return {"message": "Login successful",
-                        "status": "success",
-                        "user": user_dict,
-                        "access_token": access_token}
-            else:
-                return {"message": "Invalid email/password", "status": "fail"}, 403
+            return {
+                "message": "Login successful",
+                "status": "success",
+                "user": user_dict,
+                "access_token": access_token
+            }, 200
         else:
             return {"message": "Invalid email/password", "status": "fail"}, 403
-

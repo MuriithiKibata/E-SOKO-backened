@@ -18,7 +18,7 @@ from resources.user import SignupResource, LoginResource
 
 app = Flask(__name__)
 api = Api(app)
-
+CORS(app, origins=["http://localhost:3000"])
 migrate = Migrate(app, db)
 
 app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL')
@@ -28,7 +28,7 @@ app.config['JWT_SECRET_KEY'] = os.environ.get('JWT_SECRET_KEY')
 
 app.config['JWT_ACCESS_TOKEN_EXPIRES'] = timedelta(hours=24)
 
-CORS(app)
+
 
 migrate = Migrate(app, db, render_as_batch=True)
 
