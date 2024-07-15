@@ -20,7 +20,7 @@ class SignupResource(Resource):
             data['password']
         )
         
-        data['role'] = 'member'
+        # data['role'] = 'member'
         
         email = User.query.filter_by(email=data['email']).first()
         
